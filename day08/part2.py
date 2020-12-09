@@ -16,7 +16,7 @@ def main():
             print(acc)
             break
 
-    return 1
+    return 0
 
 
 def run_instructions(instructions):
