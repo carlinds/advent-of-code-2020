@@ -22,7 +22,7 @@ def main():
             idx += 1
 
     print(acc)
-    return 1
+    return 0
 
 
 if __name__ == "__main__":
