@@ -1,50 +1,29 @@
-import collections
+from collections import*
 
 def main():
     with open('program.txt') as f:
-        instructions = []
-        for line in f.readlines():
-            action, value = line.strip().split(' = ')
-            instructions.append((action, value))
+        lines = [line.strip() for line in f.readlines()]
 
-    #print(instructions)
-    mem = {}
+    mem = defaultdict(int)
 
-    for action, value in instructions:
-        if action == 'mask':
-            mask = value
-            #print(action, ' : ', mask)
+    for line in lines:
+        a, v = line.split(' = ')
+        if a == 'mask':
+            mask = v
+        else:
+            pos = int(a[4:-1])
+            value = int(v)
+            result = 0
 
-        if action.startswith('mem'):
-            pos = action[4:-1]
-            #print('Mem pos: ', pos)
+            for i in range(36):
+                mask_bit = mask[-1-i]
+                if mask_bit == '1' or (mask_bit == 'X' and (value & (1 << i)) > 0):
+                    result += (1 << i)
 
-            bvalue = format(int(value), 'b').zfill(36)
-            #print('Value: ', bvalue)
- 
-            result = mask_value(bvalue, mask)
-            #print('Result: ', result, 'Decimal: ', int(result, 2))
-
-            mem[pos] = int(result, 2)
+            mem[pos] = result
 
     print(sum(mem.values()))
-
     return 0
-
-
-def mask_value(value, mask):
-    result = []
-    for vb, mb in zip(value, mask):
-        if mb == '1':
-            result.append('1')
-
-        elif mb == '0':
-            result.append('0')
-        
-        else:
-            result.append(vb)
-
-    return ''.join(result)
 
 
 if __name__ == "__main__":
