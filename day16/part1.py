@@ -2,7 +2,6 @@ def main():
     with open('ticketdata.txt') as f:
         a = f.read().split('\n\n')
     rules = a[0].split('\n')
-    #my_ticket = a[1].split('\n')[1].strip().split(',')
     scanned_tickets = [row.strip().split(',') for row in a[2].split('\n')[1:]]
 
     valid_ranges = []
